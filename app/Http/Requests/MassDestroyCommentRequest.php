@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Comment;
+use App\Models\Comment;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;

@@ -6,6 +6,6 @@ class HomeController
 {
     public function index()
     {
-        return redirect()->route('admin.loan-applications.index');
+        return view('home');
     }
 }

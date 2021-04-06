@@ -2,37 +2,40 @@
 
 namespace App\Http\Requests;
 
-use App\User;
+use App\Models\User;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class StoreUserRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return true;
+        return Gate::allows('user_create');
     }
 
     public function rules()
     {
         return [
-            'name'     => [
+            'name'              => [
+                'string',
                 'required',
             ],
-            'email'    => [
+            'email'             => [
                 'required',
                 'unique:users',
             ],
-            'password' => [
+            'email_verified_at' => [
+                'required',
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+            ],
+            'password'          => [
                 'required',
             ],
-            'roles.*'  => [
+            'roles.*'           => [
                 'integer',
             ],
-            'roles'    => [
+            'roles'             => [
                 'required',
                 'array',
             ],

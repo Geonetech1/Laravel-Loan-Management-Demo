@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyStatusRequest;
 use App\Http\Requests\StoreStatusRequest;
 use App\Http\Requests\UpdateStatusRequest;
-use App\Status;
+use App\Models\Status;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,6 +53,8 @@ class StatusesController extends Controller
     public function show(Status $status)
     {
         abort_if(Gate::denies('status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $status->load('statusContracts');
 
         return view('admin.statuses.show', compact('status'));
     }
